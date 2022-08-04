@@ -1,17 +1,19 @@
 import styles from "./styles.module.scss";
 import { EditorView } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
-import { defaultKeymap } from "@codemirror/commands";
 import { vim } from "@replit/codemirror-vim";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
-import {
-  defaultHighlightStyle,
-  HighlightStyle,
-  tags,
-} from "@codemirror/highlight";
+import { syntaxHighlighting } from "@codemirror/language";
+import { tags, tagHighlighter } from "@lezer/highlight";
 import { useEffect, useRef } from "react";
 
+const highlighter = tagHighlighter([
+  {
+    tag: tags.heading,
+    class: ".cm-heading",
+  },
+]);
 const customTheme = EditorView.theme({
   "&": {
     backgroundColor: "transparent",
@@ -44,54 +46,9 @@ const customTheme = EditorView.theme({
   },
   "&:not(.cm-focused) .cm-fat-cursor": {
     background: "none !important",
-    outline: "#fff solid 1px !important",
+    outline: "#fff solid 0.8px !important",
   },
 });
-
-const highlight = HighlightStyle.define([
-  {
-    tag: tags.heading,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.9rem",
-    textDecoration: "none",
-  },
-  {
-    tag: tags.heading2,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.8rem",
-    textDecoration: "none",
-  },
-  {
-    tag: tags.heading3,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.6rem",
-    textDecoration: "none",
-  },
-  {
-    tag: tags.heading4,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.4rem",
-    textDecoration: "none",
-  },
-  {
-    tag: tags.heading5,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.2rem",
-    textDecoration: "none",
-  },
-  {
-    tag: tags.heading6,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.15rem",
-    textDecoration: "none",
-  },
-]);
 
 export default function Editor(): JSX.Element {
   const editorElement = useRef<HTMLDivElement>(null);
@@ -101,14 +58,13 @@ export default function Editor(): JSX.Element {
 
     const initialState = EditorState.create({
       extensions: [
-        highlight,
-        defaultHighlightStyle,
         markdown({
           base: markdownLanguage,
           codeLanguages: languages,
         }),
         vim(),
         customTheme,
+        syntaxHighlighting(highlighter),
       ],
     });
 
