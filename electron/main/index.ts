@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron-acrylic-window";
-import { app, shell, ipcMain } from "electron";
+import { app, shell, ipcMain, Event } from "electron";
 import { release } from "os";
 import { join } from "path";
 
@@ -35,8 +35,8 @@ async function createWindow() {
     title: "Markdown Editor",
     icon: join(ROOT_PATH.public, "favicon.svg"),
     autoHideMenuBar: true,
-    width: 600,
-    height: 800,
+    width: 980,
+    height: 700,
     vibrancy: {
       theme: "dark",
       effect: "blur",
