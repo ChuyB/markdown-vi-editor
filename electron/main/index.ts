@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron-acrylic-window";
-import { app, shell, ipcMain, Event } from "electron";
+import { app, shell, ipcMain } from "electron";
 import { release } from "os";
 import { join } from "path";
 
@@ -38,7 +38,8 @@ async function createWindow() {
     width: 980,
     height: 700,
     vibrancy: {
-      theme: "dark",
+      // theme: "dark",
+      theme: "#2C3639aa",
       effect: "blur",
     },
     webPreferences: {
