@@ -11,6 +11,7 @@ import {
   lineWrapp,
   textPlaceholder,
   selection,
+  inlineImage,
 } from "./theme";
 
 export function useEditor(): [
@@ -18,7 +19,9 @@ export function useEditor(): [
   EditorView | undefined
 ] {
   const editorParentElement = useRef<HTMLDivElement>(null);
-  let editorView: EditorView | undefined;
+
+  let editorView: EditorView | undefined = undefined;
+
   useEffect(() => {
     if (editorParentElement.current == null) return;
 

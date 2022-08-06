@@ -1,4 +1,10 @@
-import { EditorView, placeholder, drawSelection } from "@codemirror/view";
+import {
+  EditorView,
+  placeholder,
+  drawSelection,
+  Decoration,
+  WidgetType,
+} from "@codemirror/view";
 import { tags, tagHighlighter } from "@lezer/highlight";
 
 export const highlight = tagHighlighter([
@@ -39,8 +45,8 @@ export const theme = EditorView.theme({
   ".cm-content": {
     whiteSpace: "pre-wrap",
   },
-  ".cm-content, .cm-gutters": {
-    fontFamily: "Poppins",
+  ".cm-content, .cm-scroller": {
+    fontFamily: "inherit",
     fontSize: "1rem",
   },
   ".cm-cursor": {
@@ -87,8 +93,27 @@ export const theme = EditorView.theme({
   },
 });
 
+class InlineImage extends WidgetType {
+  constructor(readonly url: string) {
+    super();
+  }
+
+  toDOM(): HTMLElement {
+    let element: HTMLElement = document.createElement("img");
+    element.setAttribute("url", this.url);
+    element.className = "cm-inline-image";
+    return element;
+  }
+}
+
 export const lineWrapp = EditorView.lineWrapping;
 
 export const textPlaceholder = placeholder("Start typing...");
 
 export const selection = drawSelection();
+
+export const inlineImage = Decoration.widget({
+  widget: new InlineImage(
+    "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
+  ),
+});
