@@ -7,6 +7,18 @@ import {
 } from "@codemirror/view";
 import { tags, tagHighlighter } from "@lezer/highlight";
 
+export const colors = {
+  white: "#fff",
+  black: "#000",
+  navy: "#2C3639",
+  navyLight: "#3F4E4F",
+  brown: "#A27B5C",
+  sand: "#DCD7C9",
+  purple: "#7F5283",
+  green: "#76BA99",
+  blue: "#256D85",
+};
+
 export const highlight = tagHighlighter([
   {
     tag: tags.heading1,
@@ -32,6 +44,30 @@ export const highlight = tagHighlighter([
     tag: tags.heading6,
     class: "heading h6",
   },
+  {
+    tag: tags.list,
+    class: "list-item",
+  },
+  {
+    tag: tags.keyword,
+    class: "keyword",
+  },
+  {
+    tag: [tags.processingInstruction, tags.inserted],
+    class: "tags",
+  },
+  {
+    tag: tags.strong,
+    class: "strong",
+  },
+  {
+    tag: [tags.function(tags.variableName), tags.labelName],
+    class: "definitions",
+  },
+  {
+    tag: tags.string,
+    class: "string",
+  },
 ]);
 
 export const theme = EditorView.theme({
@@ -50,22 +86,24 @@ export const theme = EditorView.theme({
     fontSize: "1rem",
   },
   ".cm-cursor": {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     width: "1.3px",
     border: "none",
   },
   "& .cm-fat-cursor": {
-    backgroundColor: "#fff !important",
+    backgroundColor: `${colors.white} !important`,
   },
   "&:not(.cm-focused) .cm-fat-cursor": {
     background: "none !important",
-    outline: "#fff solid 1px !important",
+    outline: `${colors.white} solid 1px !important`,
   },
   ".cm-selectionBackground": {
     backgroundColor: "rgba(255, 255, 255, 0.3) !important",
   },
-  ".placeholder": {
-    color: "#DCD7C9",
+  ".cm-placeholder": {
+    display: "inline-block",
+    marginLeft: "0.5em",
+    color: colors.navyLight,
   },
   ".heading": {
     display: "inline-block",
@@ -90,6 +128,25 @@ export const theme = EditorView.theme({
   ".h6": {
     fontSize: "1.1rem",
     fontWeight: "500",
+  },
+  ".tags": {
+    color: colors.navyLight,
+  },
+  ".list-item.tags": {
+    display: "inline-block",
+    margin: "0.2em 0 0.2em 1em",
+  },
+  ".keywords": {
+    color: colors.purple,
+  },
+  ".strong": {
+    fontWeight: "700",
+  },
+  ".definitions": {
+    color: colors.blue,
+  },
+  ".string": {
+    color: colors.green,
   },
 });
 

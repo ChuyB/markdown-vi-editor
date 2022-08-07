@@ -3,7 +3,7 @@ import { EditorState } from "@codemirror/state";
 import { vim } from "@replit/codemirror-vim";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
-import { syntaxHighlighting } from "@codemirror/language";
+import { syntaxHighlighting, syntaxTree } from "@codemirror/language";
 import { RefObject, useEffect, useRef } from "react";
 import {
   highlight,
@@ -40,6 +40,7 @@ export function useEditor(): [
       ],
     });
 
+    console.log(syntaxTree(initialState));
     editorView = new EditorView({
       state: initialState,
       parent: editorParentElement.current,
