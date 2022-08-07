@@ -35,10 +35,11 @@ async function createWindow() {
     title: "Markdown Editor",
     icon: join(ROOT_PATH.public, "favicon.svg"),
     autoHideMenuBar: true,
-    width: 600,
-    height: 800,
+    width: 980,
+    height: 700,
     vibrancy: {
-      theme: "dark",
+      // theme: "dark",
+      theme: "#2C3639aa",
       effect: "blur",
     },
     webPreferences: {
