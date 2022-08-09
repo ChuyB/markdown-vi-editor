@@ -1,10 +1,15 @@
 import styles from "./styles.module.scss";
 import { useEditor } from "./useEditor";
+import { EditorValues } from "@/helpers/types";
 
-export default function Editor(): JSX.Element {
-  const [ref, editorView] = useEditor();
+export default function Editor(props: EditorValues): JSX.Element {
+  const { state, setState } = props;
+  const [ref, editorView] = useEditor({
+    initialDoc: state,
+    setState,
+  });
 
-  window.addEventListener("focus", (e) => {
+  window.addEventListener("focus", () => {
     editorView?.focus();
   });
 
