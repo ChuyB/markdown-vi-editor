@@ -1,4 +1,4 @@
-import styles from "styles/index.module.scss";
+import styles from "styles/pages/index.module.scss";
 import { useContext, useEffect } from "react";
 import Editor from "@/components/Editor";
 import { EditorStateContext } from "@/helpers/EditorStateContext";

@@ -21,36 +21,40 @@ export const colors = {
 
 export const highlight = tagHighlighter([
   {
+    tag: tags.content,
+    class: "text",
+  },
+  {
     tag: tags.heading1,
-    class: "heading h1",
+    class: "text heading h1",
   },
   {
     tag: tags.heading2,
-    class: "heading h2",
+    class: "text heading h2",
   },
   {
     tag: tags.heading3,
-    class: "heading h3",
+    class: "text heading h3",
   },
   {
     tag: tags.heading4,
-    class: "heading h4",
+    class: "text heading h4",
   },
   {
     tag: tags.heading5,
-    class: "heading h5",
+    class: "text heading h5",
   },
   {
     tag: tags.heading6,
-    class: "heading h6",
+    class: "text heading h6",
   },
   {
     tag: tags.list,
-    class: "list-item",
+    class: "decorator list-item",
   },
   {
     tag: tags.keyword,
-    class: "keyword",
+    class: "decorator keyword",
   },
   {
     tag: [tags.processingInstruction, tags.inserted],
@@ -62,7 +66,7 @@ export const highlight = tagHighlighter([
   },
   {
     tag: [tags.function(tags.variableName), tags.labelName],
-    class: "definitions",
+    class: "decorator definitions",
   },
   {
     tag: tags.string,
@@ -71,44 +75,14 @@ export const highlight = tagHighlighter([
 ]);
 
 export const theme = EditorView.theme({
-  "&.cm-editor, .cm-editor": {
-    backgroundColor: "transparent",
-    height: "100%",
-  },
-  "&.cm-editor.cm-focused": {
-    outline: "none",
-  },
-  ".cm-content": {
-    whiteSpace: "pre-wrap",
-  },
-  ".cm-content, .cm-scroller": {
-    fontFamily: "inherit",
-    fontSize: "1rem",
-  },
-  ".cm-cursor": {
-    backgroundColor: colors.white,
-    width: "1.3px",
-    border: "none",
-  },
-  "& .cm-fat-cursor": {
-    backgroundColor: `${colors.white} !important`,
-  },
-  "&:not(.cm-focused) .cm-fat-cursor": {
-    background: "none !important",
-    outline: `${colors.white} solid 1px !important`,
-  },
-  ".cm-selectionBackground": {
-    backgroundColor: "rgba(255, 255, 255, 0.3) !important",
-  },
   ".cm-placeholder": {
     display: "inline-block",
     marginLeft: "0.5em",
-    color: colors.navyLight,
   },
   ".heading": {
     display: "inline-block",
     fontWeight: "700",
-    marginBottom: "0.5em",
+    margin: "0.5em 0",
   },
   ".h1": {
     fontSize: "1.8rem",
@@ -128,9 +102,6 @@ export const theme = EditorView.theme({
   ".h6": {
     fontSize: "1.1rem",
     fontWeight: "500",
-  },
-  ".tags": {
-    color: colors.navyLight,
   },
   ".list-item.tags": {
     display: "inline-block",
@@ -156,7 +127,7 @@ class InlineImage extends WidgetType {
   }
 
   toDOM(): HTMLElement {
-    let element: HTMLElement = document.createElement("img");
+    const element: HTMLElement = document.createElement("img");
     element.setAttribute("url", this.url);
     element.className = "cm-inline-image";
     return element;

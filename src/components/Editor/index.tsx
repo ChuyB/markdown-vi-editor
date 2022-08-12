@@ -1,4 +1,4 @@
-import styles from "./styles.module.scss";
+import "./styles.scss";
 import { useEditor } from "./useEditor";
 import { EditorValues } from "@/helpers/types";
 
@@ -13,5 +13,5 @@ export default function Editor(props: EditorValues): JSX.Element {
     editorView?.focus();
   });
 
-  return <div ref={ref} className={styles.Editor} />;
+  return <div ref={ref} className="Editor light" />;
 }

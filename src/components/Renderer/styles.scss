@@ -1,0 +1,57 @@
+@use "../../assets/styles/abstracts/colors" as *;
+
+.Renderer {
+  width: 80%;
+  height: 100%;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: $black;
+    transition: color 0.1s ease-out;
+    &:hover {
+      color: #666;
+    }
+  }
+
+  @for $i from 1 to 6 {
+    h#{$i} {
+      margin: 0.5em 0;
+    }
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
+  h4 {
+    font-size: 1.3rem;
+  }
+  h5 {
+    font-size: 1.2rem;
+  }
+  h6 {
+    font-size: 1.1rem;
+  }
+
+  table {
+    margin: 0;
+    th,
+    td {
+      text-align: center;
+      padding: 0.8em;
+      border: solid #fff 1px;
+    }
+  }
+  .hljs {
+    border-radius: 3px;
+    padding: 1em 0.5em;
+  }
+}

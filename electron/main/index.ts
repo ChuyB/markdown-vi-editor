@@ -1,4 +1,5 @@
-import { BrowserWindow } from "electron-acrylic-window";
+import { BrowserWindow } from "electron";
+import { BrowserWindow as AcrylicWindow } from "electron-acrylic-window";
 import { app, shell, ipcMain } from "electron";
 import { release } from "os";
 import { join } from "path";
@@ -37,11 +38,8 @@ async function createWindow() {
     autoHideMenuBar: true,
     width: 980,
     height: 700,
-    vibrancy: {
-      // theme: "dark",
-      theme: "#2C3639aa",
-      effect: "blur",
-    },
+    //backgroundColor: "#202124",
+    backgroundColor: "#f1f3f4",
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -64,6 +62,12 @@ async function createWindow() {
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
+  });
+  win.webContents.on("will-navigate", (event, url) => {
+    if (url.startsWith("hps:")) {
+      event.preventDefault();
+      shell.openExternal(url);
+    }
   });
 }
 

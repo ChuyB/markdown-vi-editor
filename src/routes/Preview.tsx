@@ -1,4 +1,4 @@
-import styles from "styles/preview.module.scss";
+import styles from "styles/pages/preview.module.scss";
 import Renderer from "../components/Renderer";
 import { useContext, useEffect } from "react";
 import { EditorStateContext } from "@/helpers/EditorStateContext";

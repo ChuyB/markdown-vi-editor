@@ -1,0 +1,49 @@
+@use "sass:color";
+@use "../abstracts/colors" as *;
+
+@mixin tag-selector($bgColor, $textColor, $accent, $string, $functions) {
+  $lightBgColor: color.adjust($bgColor, $lightness: -10%);
+  $lightTextColor: color.adjust($textColor, $alpha: -0.5);
+  $lighterTextColor: color.adjust($textColor, $alpha: -0.8);
+  $lightAccent: color.adjust($accent, $lightness: 10%);
+
+  .text,
+  .cm-editor {
+    color: $textColor;
+  }
+
+  .cm-fat-cursor,
+  .cm-cursor {
+    background-color: $blue;
+  }
+  .cm-editor:not(.cm-focused) .cm-fat-cursor {
+    background-color: transparent;
+    outline: $accent solid 1px;
+  }
+
+  .cm-selectionBackground {
+    background-color: $lightAccent !important;
+  }
+
+  .cm-placeholder {
+    color: $lightTextColor;
+  }
+
+  .tags {
+    color: $lighterTextColor !important;
+  }
+}
+
+.light {
+  @include tag-selector($white, $black, $blue, $green, $purple);
+}
+
+$dBlack: color.adjust($black, $lightness: -10%);
+$dWhite: color.adjust($white, $lightness: -10%);
+$dBlue: color.adjust($blue, $lightness: -10%);
+$dGreen: color.adjust($green, $lightness: -10%);
+$dPurple: color.adjust($purple, $lightness: -10%);
+
+.dark {
+  @include tag-selector($black, $white, $blue, $green, $purple);
+}
