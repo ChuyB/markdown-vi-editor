@@ -38,8 +38,6 @@ async function createWindow() {
     autoHideMenuBar: true,
     width: 980,
     height: 700,
-    //backgroundColor: "#202124",
-    backgroundColor: "#f1f3f4",
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -63,8 +61,9 @@ async function createWindow() {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
   });
+
   win.webContents.on("will-navigate", (event, url) => {
-    if (url.startsWith("hps:")) {
+    if (url.startsWith("https:") || url.startsWith("http:")) {
       event.preventDefault();
       shell.openExternal(url);
     }

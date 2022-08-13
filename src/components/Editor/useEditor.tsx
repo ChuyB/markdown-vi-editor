@@ -5,14 +5,7 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
 import { syntaxHighlighting } from "@codemirror/language";
 import React, { RefObject, useEffect, useRef, useState } from "react";
-import {
-  highlight,
-  theme,
-  lineWrapp,
-  textPlaceholder,
-  selection,
-  inlineImage,
-} from "./theme";
+import { highlight, lineWrapp, textPlaceholder, selection } from "./theme";
 
 interface propsTypes {
   initialDoc?: string | undefined;
@@ -40,7 +33,6 @@ export function useEditor(
           codeLanguages: languages,
         }),
         vim(),
-        theme,
         lineWrapp,
         textPlaceholder,
         selection,

@@ -1,4 +1,3 @@
-import styles from "styles/pages/preview.module.scss";
 import Renderer from "../components/Renderer";
 import { useContext, useEffect } from "react";
 import { EditorStateContext } from "@/helpers/EditorStateContext";
@@ -21,7 +20,7 @@ export default function Preview(): JSX.Element {
   }, []);
 
   return (
-    <div className={styles.Preview}>
+    <div className="Content light">
       <Renderer state={state ? state : ""} />
     </div>
   );

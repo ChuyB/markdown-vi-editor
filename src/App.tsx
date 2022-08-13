@@ -1,3 +1,4 @@
+import "styles/global.scss";
 import React, { useState } from "react";
 import Preview from "./routes/Preview";
 import Index from "./routes/Index";

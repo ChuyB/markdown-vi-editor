@@ -1,6 +1,7 @@
 import "./styles.scss";
 import { useEditor } from "./useEditor";
 import { EditorValues } from "@/helpers/types";
+import { useEffect } from "react";
 
 export default function Editor(props: EditorValues): JSX.Element {
   const { state, setState } = props;
@@ -8,10 +9,14 @@ export default function Editor(props: EditorValues): JSX.Element {
     initialDoc: state,
     setState,
   });
-
-  window.addEventListener("focus", () => {
+  const setFocus = () => {
     editorView?.focus();
-  });
+  };
 
-  return <div ref={ref} className="Editor light" />;
+  useEffect(() => {
+    window.addEventListener("focus", setFocus);
+    return () => window.removeEventListener("focus", setFocus);
+  }, []);
+
+  return <div ref={ref} className="Editor" />;
 }

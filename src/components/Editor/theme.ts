@@ -26,27 +26,27 @@ export const highlight = tagHighlighter([
   },
   {
     tag: tags.heading1,
-    class: "text heading h1",
+    class: "text heading heading_1",
   },
   {
     tag: tags.heading2,
-    class: "text heading h2",
+    class: "text heading heading_2",
   },
   {
     tag: tags.heading3,
-    class: "text heading h3",
+    class: "text heading heading_3",
   },
   {
     tag: tags.heading4,
-    class: "text heading h4",
+    class: "text heading heading_4",
   },
   {
     tag: tags.heading5,
-    class: "text heading h5",
+    class: "text heading heading_5",
   },
   {
     tag: tags.heading6,
-    class: "text heading h6",
+    class: "text heading heading_6",
   },
   {
     tag: tags.list,
@@ -62,7 +62,7 @@ export const highlight = tagHighlighter([
   },
   {
     tag: tags.strong,
-    class: "strong",
+    class: "bold",
   },
   {
     tag: [tags.function(tags.variableName), tags.labelName],
@@ -74,74 +74,8 @@ export const highlight = tagHighlighter([
   },
 ]);
 
-export const theme = EditorView.theme({
-  ".cm-placeholder": {
-    display: "inline-block",
-    marginLeft: "0.5em",
-  },
-  ".heading": {
-    display: "inline-block",
-    fontWeight: "700",
-    margin: "0.5em 0",
-  },
-  ".h1": {
-    fontSize: "1.8rem",
-  },
-  ".h2": {
-    fontSize: "1.6rem",
-  },
-  ".h3": {
-    fontSize: "1.4rem",
-  },
-  ".h4": {
-    fontSize: "1.3rem",
-  },
-  ".h5": {
-    fontSize: "1.2rem",
-  },
-  ".h6": {
-    fontSize: "1.1rem",
-    fontWeight: "500",
-  },
-  ".list-item.tags": {
-    display: "inline-block",
-    margin: "0.2em 0 0.2em 1em",
-  },
-  ".keywords": {
-    color: colors.purple,
-  },
-  ".strong": {
-    fontWeight: "700",
-  },
-  ".definitions": {
-    color: colors.blue,
-  },
-  ".string": {
-    color: colors.green,
-  },
-});
-
-class InlineImage extends WidgetType {
-  constructor(readonly url: string) {
-    super();
-  }
-
-  toDOM(): HTMLElement {
-    const element: HTMLElement = document.createElement("img");
-    element.setAttribute("url", this.url);
-    element.className = "cm-inline-image";
-    return element;
-  }
-}
-
 export const lineWrapp = EditorView.lineWrapping;
 
 export const textPlaceholder = placeholder("Start typing...");
 
 export const selection = drawSelection();
-
-export const inlineImage = Decoration.widget({
-  widget: new InlineImage(
-    "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
-  ),
-});

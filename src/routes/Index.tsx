@@ -1,4 +1,3 @@
-import styles from "styles/pages/index.module.scss";
 import { useContext, useEffect } from "react";
 import Editor from "@/components/Editor";
 import { EditorStateContext } from "@/helpers/EditorStateContext";
@@ -19,9 +18,8 @@ export default function Index(): JSX.Element {
       document.removeEventListener("keydown", redirect);
     };
   }, []);
-
   return (
-    <div className={styles.Index}>
+    <div className="Content light">
       <Editor state={state} setState={setState} />
     </div>
   );

@@ -10,6 +10,11 @@
     height: 100%;
     resize: none;
 
+    .cm-line {
+      margin: 0.5em 0;
+      padding-left: 2px;
+    }
+
     &.cm-focused {
       outline: none;
     }
@@ -21,7 +26,6 @@
     .cm-content,
     .cm-scroller {
       font-family: inherit;
-      font-size: 1rem;
       overflow: hidden;
     }
 
@@ -29,6 +33,31 @@
       width: 1.2px;
       margin: none;
       border: none;
+    }
+
+    .cm-placeholder {
+      display: inline-block;
+      margin-left: 0.5em;
+    }
+
+    .heading {
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    @for $i from 1 to 6 {
+      .heading_#{$i} {
+        font-size: calc(2.3em - ((2em * $i) / 10));
+      }
+    }
+
+    .list-item.tags {
+      display: inline-block;
+      margin: 0.2em 0 0.2em 1em;
+    }
+
+    .bold {
+      font-weight: 600;
     }
   }
 }

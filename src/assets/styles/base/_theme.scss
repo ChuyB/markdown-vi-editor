@@ -7,30 +7,69 @@
   $lighterTextColor: color.adjust($textColor, $alpha: -0.8);
   $lightAccent: color.adjust($accent, $lightness: 10%);
 
-  .text,
-  .cm-editor {
-    color: $textColor;
+  background-color: $bgColor;
+
+  .Editor {
+    .text,
+    .cm-editor {
+      color: $textColor;
+    }
+
+    .cm-fat-cursor,
+    .cm-cursor {
+      background-color: $blue;
+    }
+    .cm-editor:not(.cm-focused) .cm-fat-cursor {
+      background-color: transparent;
+      outline: $accent solid 1px;
+    }
+
+    .cm-selectionBackground {
+      background-color: $lightAccent !important;
+    }
+
+    .cm-placeholder {
+      color: $lightTextColor;
+    }
+
+    .tags {
+      color: $lighterTextColor !important;
+    }
+
+    .keywords {
+      color: $functions;
+    }
+
+    .definitions {
+      color: $accent;
+    }
+
+    .string {
+      color: $string;
+    }
   }
 
-  .cm-fat-cursor,
-  .cm-cursor {
-    background-color: $blue;
-  }
-  .cm-editor:not(.cm-focused) .cm-fat-cursor {
-    background-color: transparent;
-    outline: $accent solid 1px;
-  }
+  .Renderer {
+    a {
+      color: $lightAccent;
+      transition: color 0.1s ease-out;
+      &:hover {
+        color: $lightTextColor;
+      }
+    }
 
-  .cm-selectionBackground {
-    background-color: $lightAccent !important;
-  }
-
-  .cm-placeholder {
-    color: $lightTextColor;
-  }
-
-  .tags {
-    color: $lighterTextColor !important;
+    table {
+      th,
+      td {
+        border: solid $lighterTextColor 1px;
+      }
+    }
+    blockquote {
+      color: $lightTextColor;
+      &::before {
+        background-color: $lightAccent;
+      }
+    }
   }
 }
 
