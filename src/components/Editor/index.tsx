@@ -1,14 +1,15 @@
 import "./styles.scss";
 import { useEditor } from "./useEditor";
-import { EditorValues } from "@/helpers/types";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { EditorStateContext } from "@/helpers/EditorStateContext";
 
-export default function Editor(props: EditorValues): JSX.Element {
-  const { state, setState } = props;
+export default function Editor(): JSX.Element {
+  const { editorState, setEditorState } = useContext(EditorStateContext);
   const [ref, editorView] = useEditor({
-    initialDoc: state,
-    setState,
+    initialDoc: editorState,
+    setState: setEditorState,
   });
+
   const setFocus = () => {
     editorView?.focus();
   };

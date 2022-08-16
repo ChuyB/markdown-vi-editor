@@ -1,11 +1,8 @@
 import Renderer from "../components/Renderer";
-import { useContext, useEffect } from "react";
-import { EditorStateContext } from "@/helpers/EditorStateContext";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { EditorValues } from "@/helpers/types";
 
 export default function Preview(): JSX.Element {
-  const { state } = useContext(EditorStateContext) as EditorValues;
   const navigate = useNavigate();
   const redirect = (e: KeyboardEvent) => {
     if (e.ctrlKey && e.key === "h") {
@@ -21,7 +18,7 @@ export default function Preview(): JSX.Element {
 
   return (
     <div className="Content light">
-      <Renderer state={state ? state : ""} />
+      <Renderer />
     </div>
   );
 }

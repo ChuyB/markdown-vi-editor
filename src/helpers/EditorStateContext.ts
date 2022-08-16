@@ -1,6 +1,7 @@
-import React from "react";
+import { createContext } from "react";
 import { EditorValues } from "./types";
 
-export const EditorStateContext = React.createContext<EditorValues | null>(
-  null
-);
+export const EditorStateContext = createContext<EditorValues>({
+  editorState: undefined,
+  setEditorState: () => undefined,
+});

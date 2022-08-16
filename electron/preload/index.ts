@@ -1,3 +1,6 @@
+import { contextBridge, ipcRenderer } from "electron";
+import fs from "fs";
+
 function domReady(
   condition: DocumentReadyState[] = ["complete", "interactive"]
 ) {
@@ -85,3 +88,12 @@ window.onmessage = (ev) => {
 };
 
 setTimeout(removeLoading, 4999);
+
+contextBridge.exposeInMainWorld("fileManager", {
+  openDialog: async (method, config, callback) => {
+    const { filePaths } = await ipcRenderer.invoke("dialog", method, config);
+    fs.readFile(filePaths[0], { encoding: "utf-8" }, (err, data) => {
+      callback(err, data);
+    });
+  },
+});

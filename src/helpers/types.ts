@@ -1,4 +1,4 @@
 export interface EditorValues {
-  state: string | undefined;
-  setState: React.Dispatch<React.SetStateAction<string | undefined>>;
+  editorState: string | undefined;
+  setEditorState: React.Dispatch<React.SetStateAction<string | undefined>>;
 }

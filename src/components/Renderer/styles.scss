@@ -1,11 +1,16 @@
 @use "../../assets/styles/abstracts/colors" as *;
 
 .Renderer {
-  width: 80%;
+  width: clamp(512px, 70vw, 1000px);
   height: 100%;
 
   p {
-    margin: 0.5em 0;
+    margin-bottom: 1em;
+    br {
+      content: "";
+      display: block;
+      margin: 0.5em 0;
+    }
   }
 
   a {

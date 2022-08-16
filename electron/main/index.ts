@@ -1,5 +1,5 @@
-import { BrowserWindow } from "electron";
-import { BrowserWindow as AcrylicWindow } from "electron-acrylic-window";
+import { BrowserWindow, dialog } from "electron";
+//import { BrowserWindow as AcrylicWindow } from "electron-acrylic-window";
 import { app, shell, ipcMain } from "electron";
 import { release } from "os";
 import { join } from "path";
@@ -41,7 +41,6 @@ async function createWindow() {
     webPreferences: {
       preload,
       nodeIntegration: true,
-      contextIsolation: false,
     },
   });
 
@@ -61,12 +60,17 @@ async function createWindow() {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
   });
-
   win.webContents.on("will-navigate", (event, url) => {
     if (url.startsWith("https:") || url.startsWith("http:")) {
       event.preventDefault();
       shell.openExternal(url);
     }
+  });
+
+  // Handles native dialog windows
+  ipcMain.handle("dialog", (event, method, params) => {
+    const res = dialog[method](params);
+    return res;
   });
 }
 

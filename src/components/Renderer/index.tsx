@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { EditorStateContext } from "@/helpers/EditorStateContext";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
@@ -10,12 +12,8 @@ import "katex/dist/katex.min.css";
 import "./highlight.min.css";
 import "./styles.scss";
 
-interface propsType {
-  state: string;
-}
-
-export default function Renderer(props: propsType): JSX.Element {
-  const markdown = props.state;
+export default function Renderer(): JSX.Element {
+  const { editorState } = useContext(EditorStateContext);
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath, remarkToc, emoji]}
@@ -25,7 +23,7 @@ export default function Renderer(props: propsType): JSX.Element {
       ]}
       className="Renderer"
     >
-      {markdown}
+      {editorState ? editorState : ""}
     </ReactMarkdown>
   );
 }

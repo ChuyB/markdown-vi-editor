@@ -8,7 +8,7 @@ import React, { RefObject, useEffect, useRef, useState } from "react";
 import { highlight, lineWrapp, textPlaceholder, selection } from "./theme";
 
 interface propsTypes {
-  initialDoc?: string | undefined;
+  initialDoc: string | undefined;
   setState: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
