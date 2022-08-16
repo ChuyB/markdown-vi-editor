@@ -7,6 +7,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeHighlight from "rehype-highlight";
 import remarkToc from "remark-toc";
+import rehypeRaw from "rehype-raw";
 
 import "katex/dist/katex.min.css";
 import "./highlight.min.css";
@@ -18,8 +19,9 @@ export default function Renderer(): JSX.Element {
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath, remarkToc, emoji]}
       rehypePlugins={[
-        [rehypeHighlight, { plainText: ["flow", "seq"] }],
+        [rehypeHighlight, { plainText: ["flow", "seq"], ignoreMissing: true }],
         rehypeKatex,
+        rehypeRaw,
       ]}
       className="Renderer"
     >

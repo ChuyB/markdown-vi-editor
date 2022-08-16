@@ -48,7 +48,6 @@
     position: relative;
     margin: 0;
     padding: 2em;
-    border-radius: 3px;
 
     &::before {
       content: "";
@@ -63,7 +62,8 @@
   }
 
   .hljs {
-    border-radius: 3px;
+    border-radius: 8px;
     padding: 1em 0.5em;
+    box-shadow: 1px 1px 10px rgba($color: #000000, $alpha: 0.5);
   }
 }

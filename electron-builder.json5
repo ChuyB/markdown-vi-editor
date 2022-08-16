@@ -24,7 +24,7 @@
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: false,
+    deleteAppDataOnUninstall: true,
   },
   mac: {
     target: ["dmg"],
