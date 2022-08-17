@@ -5,7 +5,6 @@
   height: 100%;
 
   p {
-    margin-bottom: 1em;
     br {
       content: "";
       display: block;
@@ -20,9 +19,11 @@
 
   @for $i from 1 to 6 {
     h#{$i} {
+      line-height: 1.2em;
       display: inline-block;
-      margin: 0.5em 0;
+      margin-bottom: 0.5em;
       font-size: calc(2.3em - ((2em * $i) / 10));
+      font-weight: 700;
     }
   }
 
@@ -56,8 +57,8 @@
       top: 0;
       bottom: 0;
       margin: auto 0;
-      height: 3em;
-      width: 0.4em;
+      height: 50%;
+      width: 6px;
     }
   }
 
