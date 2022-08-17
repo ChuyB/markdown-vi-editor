@@ -73,16 +73,18 @@
   }
 }
 
-.light {
-  @include tag-selector($white, $black, $blue, $green, $purple);
-}
-
 $dBlack: color.adjust($black, $lightness: -10%);
 $dWhite: color.adjust($white, $lightness: -10%);
 $dBlue: color.adjust($blue, $lightness: -10%);
 $dGreen: color.adjust($green, $lightness: -10%);
 $dPurple: color.adjust($purple, $lightness: -10%);
 
-.dark {
-  @include tag-selector($black, $white, $blue, $green, $purple);
+.Content {
+  @media (prefers-color-scheme: light) {
+    @include tag-selector($white, $black, $blue, $green, $purple);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @include tag-selector($black, $white, $blue, $green, $purple);
+  }
 }

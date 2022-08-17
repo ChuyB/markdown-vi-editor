@@ -90,10 +90,14 @@ window.onmessage = (ev) => {
 setTimeout(removeLoading, 4999);
 
 contextBridge.exposeInMainWorld("fileManager", {
-  openDialog: async (method, config, callback) => {
-    const { filePaths } = await ipcRenderer.invoke("dialog", method, config);
-    fs.readFile(filePaths[0], { encoding: "utf-8" }, (err, data) => {
-      callback(err, data);
-    });
+  openFile: (callback) => ipcRenderer.on("openFile", callback),
+});
+
+contextBridge.exposeInMainWorld("darkMode", {
+  getTheme: async () => {
+    const useDarkMode = await ipcRenderer.invoke("dark-mode:get");
+    return useDarkMode;
   },
+  setTheme: (theme: "light" | "dark") =>
+    ipcRenderer.invoke("dark-mode:set", theme),
 });

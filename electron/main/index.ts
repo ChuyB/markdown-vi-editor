@@ -1,8 +1,9 @@
-import { BrowserWindow, dialog } from "electron";
+import { BrowserWindow, dialog, Menu, MenuItem, nativeTheme } from "electron";
 //import { BrowserWindow as AcrylicWindow } from "electron-acrylic-window";
 import { app, shell, ipcMain } from "electron";
 import { release } from "os";
 import { join } from "path";
+import fs from "fs";
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith("6.1")) app.disableHardwareAcceleration();
@@ -67,12 +68,49 @@ async function createWindow() {
     }
   });
 
-  // Handles native dialog windows
-  ipcMain.handle("dialog", (event, method, params) => {
-    const res = dialog[method](params);
-    return res;
+  ipcMain.handle("dark-mode:get", () => {
+    return nativeTheme.shouldUseDarkColors;
+  });
+
+  ipcMain.handle("dark-mode:set", (event, theme: "light" | "dark") => {
+    nativeTheme.themeSource = theme;
   });
 }
+
+// Handles native dialog windows
+const openFile = async () => {
+  const { filePaths } = await dialog.showOpenDialog({
+    title: "Select a file",
+    buttonLabel: "Open",
+    properties: ["openFile"],
+    filters: [{ name: "Markdown", extensions: ["txt", "md"] }],
+  });
+  const rawContent = fs.readFileSync(filePaths[0], { encoding: "utf-8" });
+  return rawContent;
+};
+const menu = new Menu();
+menu.append(
+  new MenuItem({
+    label: "File",
+    submenu: [
+      {
+        label: "Open file",
+        accelerator: "CmdOrCtrl+O",
+        click: async () => {
+          win.webContents.send("openFile", await openFile());
+        },
+      },
+    ],
+  })
+);
+menu.append(
+  new MenuItem({
+    label: "View",
+    role: "viewMenu",
+  })
+);
+
+Menu.setApplicationMenu(menu);
 
 app.whenReady().then(createWindow);
 

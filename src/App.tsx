@@ -6,32 +6,23 @@ import { Routes, Route } from "react-router-dom";
 import { EditorStateContext } from "./helpers/EditorStateContext";
 import { useNavigate } from "react-router-dom";
 
+declare global {
+  interface Window {
+    fileManager: {
+      openFile: (callback: (event: string, value: string) => void) => void;
+    };
+    darkMode: {
+      getTheme: () => boolean;
+    };
+  }
+}
+
 const App: React.FC = () => {
   const [editorState, setEditorState] = useState<string | undefined>("");
-
   const navigate = useNavigate();
-  const openFile = async (e: KeyboardEvent) => {
-    if (e.ctrlKey && e.key === "t") {
-      const dialogConfig = {
-        title: "Select a file",
-        buttonLabel: "Open",
-        properties: ["openFile"],
-      };
-      await window.fileManager.openDialog(
-        "showOpenDialog",
-        dialogConfig,
-        (err, data) => {
-          setEditorState(data);
-          if (err) throw new Error(err);
-        }
-      );
-      navigate("/preview");
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("keydown", openFile);
-    return () => document.removeEventListener("keydown", openFile);
+  window.fileManager.openFile(async (event, value) => {
+    await setEditorState(value);
+    navigate("/preview");
   });
 
   return (
