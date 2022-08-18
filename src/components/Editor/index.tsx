@@ -1,12 +1,23 @@
-import styles from "./styles.module.scss";
+import "./styles.scss";
 import { useEditor } from "./useEditor";
+import { useContext, useEffect } from "react";
+import { EditorStateContext } from "@/helpers/EditorStateContext";
 
 export default function Editor(): JSX.Element {
-  const [ref, editorView] = useEditor();
-
-  window.addEventListener("focus", (e) => {
-    editorView?.focus();
+  const { editorState, setEditorState } = useContext(EditorStateContext);
+  const [ref, editorView] = useEditor({
+    initialDoc: editorState,
+    setState: setEditorState,
   });
 
-  return <div ref={ref} className={styles.Editor} />;
+  const setFocus = () => {
+    editorView?.focus();
+  };
+
+  useEffect(() => {
+    window.addEventListener("focus", setFocus);
+    return () => window.removeEventListener("focus", setFocus);
+  }, []);
+
+  return <div ref={ref} className="Editor" />;
 }

@@ -1,0 +1,18 @@
+@import "./base/_resets.scss";
+@import "./base/_theme.scss";
+
+body {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-size: clamp(14px, 2vw, 18px);
+  line-height: 28px;
+}
+
+.Content {
+  width: 100%;
+  min-height: 100vh;
+  padding: 8vh 0;
+  display: grid;
+  justify-items: center;
+}

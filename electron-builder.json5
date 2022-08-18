@@ -10,6 +10,9 @@
     output: "release/${version}",
     buildResources: "electron/resources",
   },
+  fileAssociations: {
+    ext: "md",
+  },
   files: ["dist"],
   win: {
     target: [
@@ -24,7 +27,7 @@
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: false,
+    deleteAppDataOnUninstall: true,
   },
   mac: {
     target: ["dmg"],

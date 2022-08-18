@@ -1,0 +1,62 @@
+@use "../../assets/styles/abstracts/colors" as *;
+
+.Editor {
+  text-align: left;
+  width: clamp(512px, 70vw, 1000px);
+  height: 100%;
+
+  .cm-editor {
+    background-color: transparent;
+    height: 100%;
+    resize: none;
+
+    .cm-line {
+      padding-left: 2px;
+    }
+
+    &.cm-focused {
+      outline: none;
+    }
+
+    .cm-content {
+      white-space: pre-wrap;
+    }
+
+    .cm-content,
+    .cm-scroller {
+      font-family: inherit;
+      overflow: hidden;
+    }
+
+    .cm-cursor {
+      width: 1.2px;
+      margin: none;
+      border: none;
+    }
+
+    .cm-placeholder {
+      display: inline-block;
+      margin-left: 0.5em;
+    }
+
+    .heading {
+      display: inline-block;
+      font-weight: 700;
+    }
+
+    @for $i from 1 to 6 {
+      .heading_#{$i} {
+        font-size: calc(2.3em - ((2em * $i) / 10));
+      }
+    }
+
+    .list-item.tags {
+      display: inline-block;
+      margin: 0.2em 0 0.2em 1em;
+    }
+
+    .bold {
+      font-weight: 600;
+    }
+  }
+}

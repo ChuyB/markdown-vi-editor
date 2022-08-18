@@ -1,0 +1,69 @@
+@use "../../assets/styles/abstracts/colors" as *;
+
+.Renderer {
+  width: clamp(512px, 70vw, 1000px);
+  height: 100%;
+
+  p {
+    br {
+      content: "";
+      display: block;
+      margin: 0.5em 0;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    transition: color 0.1s ease-out;
+  }
+
+  @for $i from 1 to 6 {
+    h#{$i} {
+      line-height: 1.2em;
+      margin-bottom: 0.5em;
+      font-size: calc(2.3em - ((2em * $i) / 10));
+      font-weight: 700;
+    }
+  }
+
+  table {
+    margin: 0;
+    th,
+    td {
+      text-align: center;
+      padding: 0.8em;
+    }
+  }
+
+  li {
+    margin: 0.2em 0 0.2em 1em;
+  }
+
+  pre {
+    font-family: monospace;
+    font-size: 1rem;
+  }
+
+  blockquote {
+    position: relative;
+    margin: 0;
+    padding: 2em;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      height: 50%;
+      width: 6px;
+    }
+  }
+
+  .hljs {
+    border-radius: 8px;
+    padding: 1em 0.5em;
+    box-shadow: 1px 1px 10px rgba($color: #000000, $alpha: 0.5);
+  }
+}
