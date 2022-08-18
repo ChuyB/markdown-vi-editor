@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from "electron";
-import fs from "fs";
 
 function domReady(
   condition: DocumentReadyState[] = ["complete", "interactive"]
@@ -91,6 +90,10 @@ setTimeout(removeLoading, 4999);
 
 contextBridge.exposeInMainWorld("fileManager", {
   openFile: (callback) => ipcRenderer.on("openFile", callback),
+  getSaveFilePath: (callback) => ipcRenderer.on("getSaveFilePath", callback),
+  saveFile: (path: string, data: string) => {
+    ipcRenderer.send("saveFile", path, data);
+  },
 });
 
 contextBridge.exposeInMainWorld("darkMode", {
@@ -100,4 +103,8 @@ contextBridge.exposeInMainWorld("darkMode", {
   },
   setTheme: (theme: "light" | "dark") =>
     ipcRenderer.invoke("dark-mode:set", theme),
+});
+
+contextBridge.exposeInMainWorld("debug", {
+  debug: (callback) => ipcRenderer.on("debug", callback),
 });

@@ -4,3 +4,7 @@ export interface EditorValues {
 }
 
 export type Theme = "light" | "dark" | undefined;
+
+export interface CurrentFile {
+  path: string | undefined;
+}

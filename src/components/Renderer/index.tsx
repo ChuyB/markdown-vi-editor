@@ -7,6 +7,8 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeHighlight from "rehype-highlight";
 import remarkToc from "remark-toc";
+
+// @ts-ignore: Unreachable code error
 import rehypeRaw from "rehype-raw";
 
 import "katex/dist/katex.min.css";

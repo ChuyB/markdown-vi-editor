@@ -51,9 +51,22 @@ async function createWindow() {
     win.loadURL(url);
   }
 
-  // Test actively push message to the Electron-Renderer
+  const openFileOnLoad = async () => {
+    const openFileRegex = new RegExp("^(.+\\\\)*(.+)\\.(.+)$", "g");
+    const openFileGroups = openFileRegex.exec(process.argv[1]);
+    const openFileExtension = openFileGroups ? openFileGroups[3] : "";
+    if (openFileExtension == "md") {
+      const openFilePath = openFileGroups[0];
+      const content = await openFile(openFilePath);
+      if (content) {
+        win?.webContents.send("openFile", content);
+      }
+    }
+  };
+
+  // Opens file on load if the app is started using a file
   win.webContents.on("did-finish-load", () => {
-    win?.webContents.send("main-process-message", new Date().toLocaleString());
+    openFileOnLoad();
   });
 
   // Make all links open with the browser, not with the application
@@ -75,34 +88,96 @@ async function createWindow() {
   ipcMain.handle("dark-mode:set", (event, theme: "light" | "dark") => {
     nativeTheme.themeSource = theme;
   });
+
+  ipcMain.on("saveFile", (event, path: string | number, data: string) => {
+    if (path !== undefined) {
+      fs.writeFileSync(path, data);
+      if (typeof path !== "number") openFile(path);
+    }
+  });
 }
 
-// Handles native dialog windows
-const openFile = async () => {
-  const { filePaths } = await dialog.showOpenDialog({
-    title: "Select a file",
-    buttonLabel: "Open",
-    properties: ["openFile"],
-    filters: [{ name: "Markdown", extensions: ["txt", "md"] }],
-  });
-  const rawContent = fs.readFileSync(filePaths[0], { encoding: "utf-8" });
-  return rawContent;
+const currentFile = { path: undefined, name: undefined, fd: undefined };
+
+// Handles native dialog windows for opening and saving files
+const openFile = async (path: string = undefined) => {
+  let isCanceled = false;
+  if (path === undefined) {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      title: "Select a file",
+      buttonLabel: "Open",
+      properties: ["openFile"],
+      filters: [{ name: "Markdown", extensions: ["md", "txt"] }],
+    });
+    path = filePaths[0];
+    isCanceled = canceled;
+  }
+
+  if (!isCanceled) {
+    const fileNameRegex = new RegExp("^(.+\\\\)*(.+)\\.(.+)$", "g");
+    const fileNameGroups = fileNameRegex.exec(path);
+    const fileDescriptor = await fs.openSync(path, "r+");
+    currentFile.path = path;
+    currentFile.name = fileNameGroups[2];
+    currentFile.fd = fileDescriptor;
+
+    win.title = `Markdown Editor - ${currentFile.name}`;
+    const content = fs.readFileSync(currentFile.fd, { encoding: "utf-8" });
+    return content;
+  }
 };
+
+const getSaveFilePath = async (options = { openDialog: false }) => {
+  if (currentFile.fd === undefined || options.openDialog) {
+    const { canceled, filePath } = await dialog.showSaveDialog({
+      title: "Save File As",
+      buttonLabel: "Save",
+      filters: [{ name: "Markdown", extensions: ["md", "txt"] }],
+    });
+    if (!canceled) {
+      return filePath;
+    }
+  } else {
+    return currentFile.fd;
+  }
+};
+
 const menu = new Menu();
 menu.append(
   new MenuItem({
     label: "File",
     submenu: [
       {
-        label: "Open file",
+        label: "Open File",
         accelerator: "CmdOrCtrl+O",
         click: async () => {
-          win.webContents.send("openFile", await openFile());
+          const content = await openFile();
+          if (content) {
+            win.webContents.send("openFile", content);
+          }
+        },
+      },
+      {
+        label: "Save File",
+        accelerator: "CmdOrCtrl+S",
+        click: async () => {
+          win.webContents.send("getSaveFilePath", await getSaveFilePath());
+        },
+      },
+      {
+        label: "Save File As",
+        accelerator: "CmdOrCtrl+Shift+S",
+        click: async () => {
+          win.webContents.send(
+            "getSaveFilePath",
+            await getSaveFilePath({ openDialog: true })
+          );
         },
       },
     ],
   })
 );
+
 menu.append(
   new MenuItem({
     label: "View",
@@ -115,6 +190,7 @@ Menu.setApplicationMenu(menu);
 app.whenReady().then(createWindow);
 
 app.on("window-all-closed", () => {
+  if (currentFile.fd !== undefined) fs.close(currentFile.fd);
   win = null;
   if (process.platform !== "darwin") app.quit();
 });
@@ -148,6 +224,5 @@ ipcMain.handle("open-win", (event, arg) => {
     childWindow.loadFile(indexHtml, { hash: arg });
   } else {
     childWindow.loadURL(`${url}/#${arg}`);
-    // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
 });

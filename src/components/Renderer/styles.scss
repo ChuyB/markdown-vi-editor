@@ -20,7 +20,6 @@
   @for $i from 1 to 6 {
     h#{$i} {
       line-height: 1.2em;
-      display: inline-block;
       margin-bottom: 0.5em;
       font-size: calc(2.3em - ((2em * $i) / 10));
       font-weight: 700;
