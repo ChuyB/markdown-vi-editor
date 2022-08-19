@@ -59,7 +59,7 @@ async function createWindow() {
       const openFilePath = openFileGroups[0];
       const content = await openFile(openFilePath);
       if (content) {
-        win?.webContents.send("openFile", content);
+        win.webContents.send("openFile", content);
       }
     }
   };

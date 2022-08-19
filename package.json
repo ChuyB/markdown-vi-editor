@@ -2,7 +2,7 @@
   "name": "markdown-editor",
   "productName": "Markdown Editor",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "A light markdown editor with Vi motions",
   "author": "Jesus Bovea",
   "license": "MIT",
