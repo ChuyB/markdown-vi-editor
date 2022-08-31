@@ -32,6 +32,10 @@ const preload = join(__dirname, "../preload/index.js");
 const url = `http://${process.env["VITE_DEV_SERVER_HOST"]}:${process.env["VITE_DEV_SERVER_PORT"]}`;
 const indexHtml = join(ROOT_PATH.dist, "index.html");
 
+const openFileRegex = new RegExp("^(.+\\\\)*(.+)\\.(.+)$", "g");
+const openFileGroups = openFileRegex.exec(process.argv[1]);
+const openFileExtension = openFileGroups ? openFileGroups[3] : "";
+
 async function createWindow() {
   win = new BrowserWindow({
     title: "Markdown Editor",
@@ -52,9 +56,6 @@ async function createWindow() {
   }
 
   const openFileOnLoad = async () => {
-    const openFileRegex = new RegExp("^(.+\\\\)*(.+)\\.(.+)$", "g");
-    const openFileGroups = openFileRegex.exec(process.argv[1]);
-    const openFileExtension = openFileGroups ? openFileGroups[3] : "";
     if (openFileExtension == "md") {
       const openFilePath = openFileGroups[0];
       const content = await openFile(openFilePath);
@@ -65,7 +66,8 @@ async function createWindow() {
   };
 
   // Opens file on load if the app is started using a file
-  win.webContents.on("did-finish-load", () => {
+  win.webContents.on("did-finish-load", async () => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
     openFileOnLoad();
   });
 
